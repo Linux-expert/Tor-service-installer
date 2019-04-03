@@ -10,17 +10,19 @@ sudo systemctl enable tor.service
     read -p "Do you want to install tor socks? (size : 200.7 kb) (y/n) : " tor_socks
 if [ "$tor_socks" == "y" ];then
     sudo pacman -S torsocks
+fi
     read -p "Do you want to install tor browser? (size : 71.7 mb) (y/n) : " tor_browser
-elif [ "$tor_browser" == "y" ];then
+if [ "$tor_browser" == "y" ];then
     sudo torsocks wget https://dist.torproject.org/torbrowser/8.0.8/tor-browser-linux64-8.0.8_en-US.tar.xz
     tar -xf tor-browser-linux64-8.0.8_en-US.tar.xz
+    chmod +x $HOME/tor-browser_en-US/start-tor-browser.desktop
     cd tor-browser_en-US
-    chmod +x 'Tor Browser Setup.desktop'
-    ./'Tor Browser Setup.desktop'
+    ./start-tor-browser.desktop
     echo "Tor browser installed !"
     echo "Good bye !"
+fi
 exit
-elif [ "$tor_socks" == "n" ];then
+if [ "$tor_socks" == "n" ];then
     echo "Good bye !"
 fi
 exit
